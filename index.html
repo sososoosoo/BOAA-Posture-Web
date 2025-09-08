@@ -81,6 +81,42 @@
             align-items: center;
         }
 
+        /* Desktop Navigation Menu */
+        .nav-desktop {
+            display: none;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-desktop a {
+            color: #666;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-desktop a:hover,
+        .nav-desktop a.active {
+            color: #000;
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-desktop a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            background: #000;
+            border-radius: 1px;
+        }
+
         .logo {
             font-family: 'Pretendard', sans-serif;
             font-size: 1.5rem;
@@ -814,6 +850,16 @@
         }
 
         /* Responsive Design */
+        @media (min-width: 1025px) {
+            .nav-desktop {
+                display: flex;
+            }
+            
+            .hamburger {
+                display: none;
+            }
+        }
+
         @media (max-width: 1200px) {
             .nav-menu {
                 width: 350px;
@@ -825,11 +871,17 @@
             }
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .hamburger {
                 display: flex;
             }
+            
+            .nav-desktop {
+                display: none;
+            }
+        }
 
+        @media (max-width: 768px) {
             .hero-brand {
                 font-size: 3rem;
             }
@@ -870,6 +922,10 @@
                 font-size: 2rem;
             }
 
+            .section-description {
+                font-size: 1rem;
+            }
+
             .features-grid {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
@@ -877,6 +933,14 @@
 
             .feature-card {
                 padding: 2rem;
+            }
+
+            .feature-title {
+                font-size: 1.2rem;
+            }
+
+            .feature-description {
+                font-size: 0.9rem;
             }
 
             .download-grid {
@@ -893,6 +957,10 @@
 
             .hero-scroll {
                 bottom: 1rem;
+            }
+
+            .nav-desktop {
+                display: none !important;
             }
         }
 
@@ -957,6 +1025,17 @@
             </span>
         </a>
 
+        <!-- Desktop Navigation -->
+        <div class="nav-desktop" id="navDesktop">
+            <a href="#home" class="nav-desktop-link active">Home</a>
+            <a href="#about" class="nav-desktop-link">About</a>
+            <a href="#features" class="nav-desktop-link">Features</a>
+            <a href="#technology" class="nav-desktop-link">Technology</a>
+            <a href="#team" class="nav-desktop-link">Team</a>
+            <a href="#download" class="nav-desktop-link">Download</a>
+            <a href="#contact" class="nav-desktop-link">Contact</a>
+        </div>
+
         <!-- Hamburger Menu Button -->
         <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
             <span class="hamburger-line"></span>
@@ -995,6 +1074,22 @@
                             <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
                         </svg>
                         Features
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a href="#technology">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Technology
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a href="#team">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                        </svg>
+                        Team
                     </a>
                 </li>
                 <li class="nav-link">
@@ -1145,6 +1240,92 @@
         </div>
     </section>
 
+    <!-- Technology Section -->
+    <section id="technology" class="section">
+        <div class="container">
+            <h2 class="section-title">기술 스택</h2>
+            <p class="section-description">
+                최신 AI 기술과 컴퓨터 비전 기술을 활용한 자세 분석 시스템의 핵심 기술들을 소개합니다.
+            </p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3 class="feature-title">YOLOv9 Detection</h3>
+                    <p class="feature-description">최신 YOLOv9 알고리즘을 활용한 실시간 객체 감지로 정확한 인체 포즈 추정이 가능합니다. 기존 버전 대비 향상된 정확도와 속도를 자랑합니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👁️</div>
+                    <h3 class="feature-title">MediaPipe Framework</h3>
+                    <p class="feature-description">Google의 MediaPipe 프레임워크를 통해 실시간 포즈 랜드마크 추출과 관절점 추적을 수행하여 정밀한 자세 분석을 제공합니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">OpenCV Integration</h3>
+                    <p class="feature-description">OpenCV 라이브러리를 활용한 이미지 전처리와 컴퓨터 비전 기술로 다양한 환경에서 안정적인 영상 분석을 수행합니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3 class="feature-title">Real-time Processing</h3>
+                    <p class="feature-description">최적화된 알고리즘과 멀티스레딩 기술을 통해 실시간 영상 처리와 즉각적인 피드백 제공이 가능합니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3 class="feature-title">Machine Learning Analytics</h3>
+                    <p class="feature-description">축적된 자세 데이터를 기반으로 한 머신러닝 분석을 통해 개인별 자세 패턴을 학습하고 맞춤형 개선 방안을 제시합니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <h3 class="feature-title">Python Backend</h3>
+                    <p class="feature-description">Python 기반의 안정적인 백엔드 시스템으로 데이터 처리, 분석, 저장 기능을 효율적으로 관리합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="section">
+        <div class="container">
+            <h2 class="section-title">팀 BOAA</h2>
+            <p class="section-description">
+                건강한 미래를 만들어가는 자세 분석 전문가들입니다.
+            </p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">👨‍💻</div>
+                    <h3 class="feature-title">AI 개발팀</h3>
+                    <p class="feature-description">딥러닝과 컴퓨터 비전 분야의 전문가들로 구성된 팀으로, YOLOv9와 MediaPipe 기술을 활용한 자세 인식 알고리즘을 개발하고 있습니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏥</div>
+                    <h3 class="feature-title">헬스케어 전문가</h3>
+                    <p class="feature-description">물리치료사와 재활의학 전문가들이 참여하여 올바른 자세 기준과 교정 가이드라인을 제공하고, 의학적으로 검증된 분석 기준을 적용합니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3 class="feature-title">UX/UI 디자인팀</h3>
+                    <p class="feature-description">사용자 경험을 최우선으로 하는 직관적이고 아름다운 인터페이스 설계를 담당하며, 모든 연령대가 쉽게 사용할 수 있는 디자인을 추구합니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔬</div>
+                    <h3 class="feature-title">연구개발팀</h3>
+                    <p class="feature-description">지속적인 기술 혁신과 성능 개선을 위해 최신 AI 논문 연구, 알고리즘 최적화, 새로운 기능 개발에 집중하고 있습니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛠️</div>
+                    <h3 class="feature-title">품질보증팀</h3>
+                    <p class="feature-description">다양한 환경과 조건에서의 철저한 테스트를 통해 안정성과 정확성을 보장하며, 사용자 피드백을 반영한 지속적인 개선 작업을 수행합니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📞</div>
+                    <h3 class="feature-title">고객지원팀</h3>
+                    <p class="feature-description">사용자들의 문의사항과 피드백에 신속하고 친절하게 대응하며, 제품 사용법 안내와 기술적 문제 해결을 위해 24/7 지원 서비스를 제공합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Download Section -->
     <section id="download" class="section">
         <div class="container">
@@ -1278,6 +1459,39 @@
             header.style.backdropFilter = 'blur(20px)';
         }
     });
+    
+    // Active tab management for desktop navigation
+    function updateActiveTab() {
+        const sections = ['home', 'about', 'features', 'technology', 'team', 'download', 'contact'];
+        const navLinks = document.querySelectorAll('.nav-desktop-link');
+        
+        let currentSection = 'home';
+        
+        sections.forEach(sectionId => {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 100 && rect.bottom >= 100) {
+                    currentSection = sectionId;
+                }
+            }
+        });
+        
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href === `#${currentSection}`) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    }
+    
+    // Update active tab on scroll
+    window.addEventListener('scroll', updateActiveTab);
+    
+    // Update active tab on page load
+    document.addEventListener('DOMContentLoaded', updateActiveTab);
 </script>
 </body>
 </html>
