@@ -81,41 +81,6 @@
             align-items: center;
         }
 
-        /* Desktop Navigation Menu */
-        .nav-desktop {
-            display: none;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .nav-desktop a {
-            color: #666;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-desktop a:hover,
-        .nav-desktop a.active {
-            color: #000;
-            background: rgba(0, 0, 0, 0.05);
-        }
-
-        .nav-desktop a.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 2px;
-            background: #000;
-            border-radius: 1px;
-        }
 
         .logo {
             font-family: 'Pretendard', sans-serif;
@@ -147,7 +112,7 @@
         }
 
         .hamburger {
-            display: none;
+            display: flex;
             flex-direction: column;
             background: none;
             border: none;
@@ -161,12 +126,26 @@
             width: 24px;
             height: 2px;
             background: #000;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             border-radius: 2px;
+            transform-origin: center;
         }
 
         .hamburger:hover .hamburger-line {
             background: #333;
+        }
+
+        .hamburger.active .hamburger-line:nth-child(1) {
+            transform: translateY(6px) rotate(45deg);
+        }
+
+        .hamburger.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .hamburger.active .hamburger-line:nth-child(3) {
+            transform: translateY(-6px) rotate(-45deg);
         }
 
         .nav-overlay {
@@ -197,13 +176,17 @@
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
             z-index: 999;
-            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             display: flex;
             flex-direction: column;
+            transform: translateX(100%);
+            opacity: 0;
         }
 
         .nav-menu.active {
             right: 0;
+            transform: translateX(0);
+            opacity: 1;
         }
 
         .nav-menu-content {
@@ -486,6 +469,89 @@
         main {
             padding-top: 0;
         }
+
+        /* Tab Content Management */
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: tabSlideIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        .tab-content.fade-out {
+            animation: tabSlideOut 0.4s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards;
+        }
+
+        /* Smooth Animations */
+        .animate-fade-up {
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            animation: contentFadeUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        /* Enhanced Tab Transition Animations */
+        @keyframes tabSlideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) scale(0.96);
+                filter: blur(3px);
+            }
+            40% {
+                opacity: 0.6;
+                transform: translateY(20px) scale(0.98);
+                filter: blur(1px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes tabSlideOut {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.98);
+                filter: blur(2px);
+            }
+        }
+
+        @keyframes contentFadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) scale(0.94);
+                filter: blur(4px);
+            }
+            50% {
+                opacity: 0.7;
+                transform: translateY(15px) scale(0.97);
+                filter: blur(1px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0);
+            }
+        }
+
+        /* Staggered Animation Classes */
+        .animate-delay-1 { animation-delay: 0.1s; }
+        .animate-delay-2 { animation-delay: 0.2s; }
+        .animate-delay-3 { animation-delay: 0.3s; }
+        .animate-delay-4 { animation-delay: 0.4s; }
+        .animate-delay-5 { animation-delay: 0.5s; }
+        .animate-delay-6 { animation-delay: 0.6s; }
+        .animate-delay-7 { animation-delay: 0.7s; }
 
         .section-title {
             font-family: 'Pretendard', sans-serif;
@@ -850,16 +916,6 @@
         }
 
         /* Responsive Design */
-        @media (min-width: 1025px) {
-            .nav-desktop {
-                display: flex;
-            }
-            
-            .hamburger {
-                display: none;
-            }
-        }
-
         @media (max-width: 1200px) {
             .nav-menu {
                 width: 350px;
@@ -868,16 +924,6 @@
 
             .nav {
                 padding: 1rem 1.5rem;
-            }
-        }
-
-        @media (max-width: 1024px) {
-            .hamburger {
-                display: flex;
-            }
-            
-            .nav-desktop {
-                display: none;
             }
         }
 
@@ -1025,16 +1071,6 @@
             </span>
         </a>
 
-        <!-- Desktop Navigation -->
-        <div class="nav-desktop" id="navDesktop">
-            <a href="#home" class="nav-desktop-link active">Home</a>
-            <a href="#about" class="nav-desktop-link">About</a>
-            <a href="#features" class="nav-desktop-link">Features</a>
-            <a href="#technology" class="nav-desktop-link">Technology</a>
-            <a href="#team" class="nav-desktop-link">Team</a>
-            <a href="#download" class="nav-desktop-link">Download</a>
-            <a href="#contact" class="nav-desktop-link">Contact</a>
-        </div>
 
         <!-- Hamburger Menu Button -->
         <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
@@ -1124,269 +1160,273 @@
 </header>
 
 <!-- Main Content -->
-<main>
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <!-- Background Elements -->
-        <div class="hero-background"></div>
-        <div class="hero-overlay"></div>
+<main id="mainContent">
+    <!-- Home Section -->
+    <section class="tab-content active" id="home">
+        <!-- Hero Section -->
+        <div class="hero">
+            <!-- Background Elements -->
+            <div class="hero-background"></div>
+            <div class="hero-overlay"></div>
 
-        <!-- Floating Particles -->
-        <div class="hero-particles">
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-        </div>
-
-        <!-- Tech Icons -->
-        <div class="hero-tech-icons">
-            <div class="tech-icon">🤖</div>
-            <div class="tech-icon">📊</div>
-            <div class="tech-icon">🎯</div>
-            <div class="tech-icon">⚡</div>
-        </div>
-
-        <!-- Hero Content -->
-        <div class="hero-content">
-            <h1 class="hero-brand">자세 어때</h1>
-            <p class="hero-slogan">
-                Where <span class="highlight">Body</span><br>
-                meets <span class="highlight">AI</span>
-            </p>
-            <p class="hero-description">
-                최신 인공지능 기술과 컴퓨터 비전을 활용하여 실시간으로 자세를 분석하고<br>
-                개선 방향을 제시하는 혁신적인 솔루션입니다. 건강한 자세 습관을 만들어보세요.
-            </p>
-            <div class="hero-cta">
-                <a href="#download" class="hero-btn hero-btn-primary">
-                    다운로드 하기
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"/>
-                    </svg>
-                </a>
-                <a href="#features" class="hero-btn hero-btn-secondary">
-                    기술 살펴보기
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                </a>
+            <!-- Floating Particles -->
+            <div class="hero-particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
             </div>
-        </div>
 
-        <!-- Scroll Indicator -->
-        <div class="hero-scroll" onclick="smoothScrollTo('#about')">
-            <span class="hero-scroll-text">Scroll</span>
-            <div class="hero-scroll-arrow"></div>
+            <!-- Tech Icons -->
+            <div class="hero-tech-icons">
+                <div class="tech-icon">🤖</div>
+                <div class="tech-icon">📊</div>
+                <div class="tech-icon">🎯</div>
+                <div class="tech-icon">⚡</div>
+            </div>
+
+            <!-- Hero Content -->
+            <div class="hero-content">
+                <h1 class="hero-brand animate-fade-up">자세 어때</h1>
+                <p class="hero-slogan animate-fade-up" style="animation-delay: 0.2s">
+                    Where <span class="highlight">Body</span><br>
+                    meets <span class="highlight">AI</span>
+                </p>
+                <p class="hero-description animate-fade-up" style="animation-delay: 0.4s">
+                    최신 인공지능 기술과 컴퓨터 비전을 활용하여 실시간으로 자세를 분석하고<br>
+                    개선 방향을 제시하는 혁신적인 솔루션입니다. 건강한 자세 습관을 만들어보세요.
+                </p>
+                <div class="hero-cta animate-fade-up" style="animation-delay: 0.6s">
+                    <a href="#" onclick="showTab('download')" class="hero-btn hero-btn-primary">
+                        다운로드 하기
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"/>
+                        </svg>
+                    </a>
+                    <a href="#" onclick="showTab('features')" class="hero-btn hero-btn-secondary">
+                        기술 살펴보기
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="section">
-        <div class="container">
-            <h2 class="section-title">자세 어때</h2>
-            <p class="section-description">
-                자세 어때는 현대인의 자세 문제를 해결하기 위해 개발되었습니다.<br>
-                장시간 컴퓨터 사용으로 인한 거북목, 라운드숄더 등의 문제를 실시간으로 감지하고
-                개선 방향을 제시합니다.<br><br>
-                MediaPipe와 OpenCV 기술을 기반으로 하여 정확하고 빠른 자세 판단이 가능하며<br>
-                사용자 친화적인 인터페이스로 누구나 쉽게 사용할 수 있습니다.
-            </p>
+    <section class="tab-content" id="about">
+        <div class="section">
+            <div class="container">
+                <h2 class="section-title animate-fade-up">자세 어때</h2>
+                <p class="section-description animate-fade-up" style="animation-delay: 0.2s">
+                    자세 어때는 현대인의 자세 문제를 해결하기 위해 개발되었습니다.<br>
+                    장시간 컴퓨터 사용으로 인한 거북목, 라운드숄더 등의 문제를 실시간으로 감지하고
+                    개선 방향을 제시합니다.<br><br>
+                    MediaPipe와 OpenCV 기술을 기반으로 하여 정확하고 빠른 자세 판단이 가능하며<br>
+                    사용자 친화적인 인터페이스로 누구나 쉽게 사용할 수 있습니다.
+                </p>
+            </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section id="features" class="section">
-        <div class="container">
-            <h2 class="section-title">주요 기능</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3 class="feature-title">실시간 자세 분석</h3>
-                    <p class="feature-description">카메라를 통해 실시간으로 자세를 분석하고 즉각적인 피드백을 제공합니다.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🤖</div>
-                    <h3 class="feature-title">AI 기반 정확도</h3>
-                    <p class="feature-description">최신 딥러닝 모델을 사용하여 높은 정확도의 자세 인식을 제공합니다.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3 class="feature-title">상세한 분석 리포트</h3>
-                    <p class="feature-description">자세 데이터를 엑셀로 저장하여 장기적인 자세 개선 추적이 가능합니다.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3 class="feature-title">빠른 처리속도</h3>
-                    <p class="feature-description">최적화된 알고리즘으로 지연 없는 실시간 분석을 제공합니다.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔧</div>
-                    <h3 class="feature-title">사용자 맞춤 설정</h3>
-                    <p class="feature-description">개인의 체형과 환경에 맞는 맞춤형 분석 설정이 가능합니다.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🏥</div>
-                    <h3 class="feature-title">건강 관리 통합</h3>
-                    <p class="feature-description">자세 개선을 통한 전반적인 건강 상태 향상을 도모합니다.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎖️</div>
-                    <h3 class="feature-title">첨단 딥러닝 기반의 정확성</h3>
-                    <p class="feature-description">기존 모델 대비 향상된 정확성과 효율성을 자랑하는 YOLOv9 기술을 적용하여, 미세한 자세 변화까지 놓치지 않고 분석합니다. 이를 통해 신뢰도 높은 데이터를 제공하며, 더 효과적인 자세 교정을 돕습니다.</p>
+    <section class="tab-content" id="features">
+        <div class="section">
+            <div class="container">
+                <h2 class="section-title animate-fade-up">주요 기능</h2>
+                <div class="features-grid">
+                    <div class="feature-card animate-fade-up" style="animation-delay: 0.1s">
+                        <div class="feature-icon">🎯</div>
+                        <h3 class="feature-title">실시간 자세 분석</h3>
+                        <p class="feature-description">카메라를 통해 실시간으로 자세를 분석하고 즉각적인 피드백을 제공합니다.</p>
+                    </div>
+                    <div class="feature-card animate-fade-up" style="animation-delay: 0.2s">
+                        <div class="feature-icon">🤖</div>
+                        <h3 class="feature-title">AI 기반 정확도</h3>
+                        <p class="feature-description">최신 딥러닝 모델을 사용하여 높은 정확도의 자세 인식을 제공합니다.</p>
+                    </div>
+                    <div class="feature-card animate-fade-up" style="animation-delay: 0.3s">
+                        <div class="feature-icon">📊</div>
+                        <h3 class="feature-title">상세한 분석 리포트</h3>
+                        <p class="feature-description">자세 데이터를 엑셀로 저장하여 장기적인 자세 개선 추적이 가능합니다.</p>
+                    </div>
+                    <div class="feature-card animate-fade-up" style="animation-delay: 0.4s">
+                        <div class="feature-icon">⚡</div>
+                        <h3 class="feature-title">빠른 처리속도</h3>
+                        <p class="feature-description">최적화된 알고리즘으로 지연 없는 실시간 분석을 제공합니다.</p>
+                    </div>
+                    <div class="feature-card animate-fade-up" style="animation-delay: 0.5s">
+                        <div class="feature-icon">🔧</div>
+                        <h3 class="feature-title">사용자 맞춤 설정</h3>
+                        <p class="feature-description">개인의 체형과 환경에 맞는 맞춤형 분석 설정이 가능합니다.</p>
+                    </div>
+                    <div class="feature-card animate-fade-up" style="animation-delay: 0.6s">
+                        <div class="feature-icon">🏥</div>
+                        <h3 class="feature-title">건강 관리 통합</h3>
+                        <p class="feature-description">자세 개선을 통한 전반적인 건강 상태 향상을 도모합니다.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Technology Section -->
-    <section id="technology" class="section">
-        <div class="container">
-            <h2 class="section-title">기술 스택</h2>
-            <p class="section-description">
-                최신 AI 기술과 컴퓨터 비전 기술을 활용한 자세 분석 시스템의 핵심 기술들을 소개합니다.
-            </p>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🧠</div>
-                    <h3 class="feature-title">YOLOv9 Detection</h3>
-                    <p class="feature-description">최신 YOLOv9 알고리즘을 활용한 실시간 객체 감지로 정확한 인체 포즈 추정이 가능합니다. 기존 버전 대비 향상된 정확도와 속도를 자랑합니다.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">👁️</div>
-                    <h3 class="feature-title">MediaPipe Framework</h3>
-                    <p class="feature-description">Google의 MediaPipe 프레임워크를 통해 실시간 포즈 랜드마크 추출과 관절점 추적을 수행하여 정밀한 자세 분석을 제공합니다.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3 class="feature-title">OpenCV Integration</h3>
-                    <p class="feature-description">OpenCV 라이브러리를 활용한 이미지 전처리와 컴퓨터 비전 기술로 다양한 환경에서 안정적인 영상 분석을 수행합니다.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⚙️</div>
-                    <h3 class="feature-title">Real-time Processing</h3>
-                    <p class="feature-description">최적화된 알고리즘과 멀티스레딩 기술을 통해 실시간 영상 처리와 즉각적인 피드백 제공이 가능합니다.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📈</div>
-                    <h3 class="feature-title">Machine Learning Analytics</h3>
-                    <p class="feature-description">축적된 자세 데이터를 기반으로 한 머신러닝 분석을 통해 개인별 자세 패턴을 학습하고 맞춤형 개선 방안을 제시합니다.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔗</div>
-                    <h3 class="feature-title">Python Backend</h3>
-                    <p class="feature-description">Python 기반의 안정적인 백엔드 시스템으로 데이터 처리, 분석, 저장 기능을 효율적으로 관리합니다.</p>
+    <section class="tab-content" id="technology">
+        <div class="section">
+            <div class="container">
+                <h2 class="section-title animate-fade-up">기술 스택</h2>
+                <p class="section-description animate-fade-up" style="animation-delay: 0.2s">
+                    최신 AI 기술과 컴퓨터 비전 기술을 활용한 자세 분석 시스템의 핵심 기술들을 소개합니다.
+                </p>
+                
+                <div class="features-grid">
+                    <div class="feature-card animate-fade-up" style="animation-delay: 0.1s">
+                        <div class="feature-icon">🧠</div>
+                        <h3 class="feature-title">YOLOv9 Detection</h3>
+                        <p class="feature-description">최신 YOLOv9 알고리즘을 활용한 실시간 객체 감지로 정확한 인체 포즈 추정이 가능합니다. 기존 버전 대비 향상된 정확도와 속도를 자랑합니다.</p>
+                    </div>
+                    <div class="feature-card animate-fade-up" style="animation-delay: 0.2s">
+                        <div class="feature-icon">👁️</div>
+                        <h3 class="feature-title">MediaPipe Framework</h3>
+                        <p class="feature-description">Google의 MediaPipe 프레임워크를 통해 실시간 포즈 랜드마크 추출과 관절점 추적을 수행하여 정밀한 자세 분석을 제공합니다.</p>
+                    </div>
+                    <div class="feature-card animate-fade-up" style="animation-delay: 0.3s">
+                        <div class="feature-icon">🎯</div>
+                        <h3 class="feature-title">OpenCV Integration</h3>
+                        <p class="feature-description">OpenCV 라이브러리를 활용한 이미지 전처리와 컴퓨터 비전 기술로 다양한 환경에서 안정적인 영상 분석을 수행합니다.</p>
+                    </div>
+                    <div class="feature-card animate-fade-up" style="animation-delay: 0.4s">
+                        <div class="feature-icon">⚙️</div>
+                        <h3 class="feature-title">Real-time Processing</h3>
+                        <p class="feature-description">최적화된 알고리즘과 멀티스레딩 기술을 통해 실시간 영상 처리와 즉각적인 피드백 제공이 가능합니다.</p>
+                    </div>
+                    <div class="feature-card animate-fade-up" style="animation-delay: 0.5s">
+                        <div class="feature-icon">📈</div>
+                        <h3 class="feature-title">Machine Learning Analytics</h3>
+                        <p class="feature-description">축적된 자세 데이터를 기반으로 한 머신러닝 분석을 통해 개인별 자세 패턴을 학습하고 맞춤형 개선 방안을 제시합니다.</p>
+                    </div>
+                    <div class="feature-card animate-fade-up" style="animation-delay: 0.6s">
+                        <div class="feature-icon">🔗</div>
+                        <h3 class="feature-title">Python Backend</h3>
+                        <p class="feature-description">Python 기반의 안정적인 백엔드 시스템으로 데이터 처리, 분석, 저장 기능을 효율적으로 관리합니다.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Team Section -->
-    <section id="team" class="section">
-        <div class="container">
-            <h2 class="section-title">팀 BOAA</h2>
-            <p class="section-description">
-                건강한 미래를 만들어가는 자세 분석 전문가들입니다.
-            </p>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">👨‍💻</div>
-                    <h3 class="feature-title">AI 개발팀</h3>
-                    <p class="feature-description">딥러닝과 컴퓨터 비전 분야의 전문가들로 구성된 팀으로, YOLOv9와 MediaPipe 기술을 활용한 자세 인식 알고리즘을 개발하고 있습니다.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🏥</div>
-                    <h3 class="feature-title">헬스케어 전문가</h3>
-                    <p class="feature-description">물리치료사와 재활의학 전문가들이 참여하여 올바른 자세 기준과 교정 가이드라인을 제공하고, 의학적으로 검증된 분석 기준을 적용합니다.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎨</div>
-                    <h3 class="feature-title">UX/UI 디자인팀</h3>
-                    <p class="feature-description">사용자 경험을 최우선으로 하는 직관적이고 아름다운 인터페이스 설계를 담당하며, 모든 연령대가 쉽게 사용할 수 있는 디자인을 추구합니다.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔬</div>
-                    <h3 class="feature-title">연구개발팀</h3>
-                    <p class="feature-description">지속적인 기술 혁신과 성능 개선을 위해 최신 AI 논문 연구, 알고리즘 최적화, 새로운 기능 개발에 집중하고 있습니다.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🛠️</div>
-                    <h3 class="feature-title">품질보증팀</h3>
-                    <p class="feature-description">다양한 환경과 조건에서의 철저한 테스트를 통해 안정성과 정확성을 보장하며, 사용자 피드백을 반영한 지속적인 개선 작업을 수행합니다.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📞</div>
-                    <h3 class="feature-title">고객지원팀</h3>
-                    <p class="feature-description">사용자들의 문의사항과 피드백에 신속하고 친절하게 대응하며, 제품 사용법 안내와 기술적 문제 해결을 위해 24/7 지원 서비스를 제공합니다.</p>
+    <section class="tab-content" id="team">
+        <div class="section">
+            <div class="container">
+                <h2 class="section-title animate-fade-up">팀 BOAA</h2>
+                <p class="section-description animate-fade-up" style="animation-delay: 0.2s">
+                    건강한 미래를 만들어가는 자세 분석 전문가들입니다.
+                </p>
+                
+                <div class="features-grid">
+                    <div class="feature-card animate-fade-up" style="animation-delay: 0.1s">
+                        <div class="feature-icon">👨‍💻</div>
+                        <h3 class="feature-title">AI 개발팀</h3>
+                        <p class="feature-description">딥러닝과 컴퓨터 비전 분야의 전문가들로 구성된 팀으로, YOLOv9와 MediaPipe 기술을 활용한 자세 인식 알고리즘을 개발하고 있습니다.</p>
+                    </div>
+                    <div class="feature-card animate-fade-up" style="animation-delay: 0.2s">
+                        <div class="feature-icon">🏥</div>
+                        <h3 class="feature-title">헬스케어 전문가</h3>
+                        <p class="feature-description">물리치료사와 재활의학 전문가들이 참여하여 올바른 자세 기준과 교정 가이드라인을 제공하고, 의학적으로 검증된 분석 기준을 적용합니다.</p>
+                    </div>
+                    <div class="feature-card animate-fade-up" style="animation-delay: 0.3s">
+                        <div class="feature-icon">🎨</div>
+                        <h3 class="feature-title">UX/UI 디자인팀</h3>
+                        <p class="feature-description">사용자 경험을 최우선으로 하는 직관적이고 아름다운 인터페이스 설계를 담당하며, 모든 연령대가 쉽게 사용할 수 있는 디자인을 추구합니다.</p>
+                    </div>
+                    <div class="feature-card animate-fade-up" style="animation-delay: 0.4s">
+                        <div class="feature-icon">🔬</div>
+                        <h3 class="feature-title">연구개발팀</h3>
+                        <p class="feature-description">지속적인 기술 혁신과 성능 개선을 위해 최신 AI 논문 연구, 알고리즘 최적화, 새로운 기능 개발에 집중하고 있습니다.</p>
+                    </div>
+                    <div class="feature-card animate-fade-up" style="animation-delay: 0.5s">
+                        <div class="feature-icon">🛠️</div>
+                        <h3 class="feature-title">품질보증팀</h3>
+                        <p class="feature-description">다양한 환경과 조건에서의 철저한 테스트를 통해 안정성과 정확성을 보장하며, 사용자 피드백을 반영한 지속적인 개선 작업을 수행합니다.</p>
+                    </div>
+                    <div class="feature-card animate-fade-up" style="animation-delay: 0.6s">
+                        <div class="feature-icon">📞</div>
+                        <h3 class="feature-title">고객지원팀</h3>
+                        <p class="feature-description">사용자들의 문의사항과 피드백에 신속하고 친절하게 대응하며, 제품 사용법 안내와 기술적 문제 해결을 위해 24/7 지원 서비스를 제공합니다.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Download Section -->
-    <section id="download" class="section">
-        <div class="container">
-            <h2 class="section-title">다운로드</h2>
-            <div class="download-section">
-                <div class="version-badge">v1.0.0 Latest</div>
-                <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">지금 다운로드하고 건강한 자세를 만들어보세요</h3>
-                <p style="color: #666; margin-bottom: 2rem;">자세 어때 프로그램을 설치하여 바른 자세 습관을 기르세요.</p>
-                
-                <div class="download-grid">
-                    <div class="download-card">
-                        <div style="font-size: 3rem; margin-bottom: 1rem;">🖥️</div>
-                        <h4 style="margin-bottom: 1rem;">Windows</h4>
-                        <p style="color: #666; font-size: 0.9rem; margin-bottom: 1.5rem;">Windows 10/11 지원</p>
-                        <a href="https://github.com/sososoosoo/BOAA-Posture-Web/releases/download/v1.0.1/BOAA-Front.exe" 
-                           class="btn btn-primary" 
-                           style="width: 100%; display: flex; justify-content: center;"
-                           target="_blank">
-                            Windows 다운로드
-                        </a>
+    <section class="tab-content" id="download">
+        <div class="section">
+            <div class="container">
+                <h2 class="section-title animate-fade-up">다운로드</h2>
+                <div class="download-section animate-fade-up" style="animation-delay: 0.2s">
+                    <div class="version-badge">v1.0.0 Latest</div>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">지금 다운로드하고 건강한 자세를 만들어보세요</h3>
+                    <p style="color: #666; margin-bottom: 2rem;">자세 어때 프로그램을 설치하여 바른 자세 습관을 기르세요.</p>
+                    
+                    <div class="download-grid">
+                        <div class="download-card">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🖥️</div>
+                            <h4 style="margin-bottom: 1rem;">Windows</h4>
+                            <p style="color: #666; font-size: 0.9rem; margin-bottom: 1.5rem;">Windows 10/11 지원</p>
+                            <a href="https://github.com/sososoosoo/BOAA-Posture-Web/releases/download/v1.0.2/BOAA-.exe" 
+                               class="btn btn-primary" 
+                               style="width: 100%; display: flex; justify-content: center;"
+                               target="_blank">
+                                Windows 다운로드
+                            </a>
+                        </div>
+                        <div class="download-card">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">📱</div>
+                            <h4 style="margin-bottom: 1rem;">Mobile App</h4>
+                            <p style="color: #666; font-size: 0.9rem; margin-bottom: 1.5rem;">Android/iOS 앱</p>
+                            <button class="btn btn-secondary" style="width: 100%;" disabled>곧 출시 예정</button>
+                        </div>
                     </div>
-                    <div class="download-card">
-                        <div style="font-size: 3rem; margin-bottom: 1rem;">📱</div>
-                        <h4 style="margin-bottom: 1rem;">Mobile App</h4>
-                        <p style="color: #666; font-size: 0.9rem; margin-bottom: 1.5rem;">Android/iOS 앱</p>
-                        <button class="btn btn-secondary" style="width: 100%;" disabled>곧 출시 예정</button>
-                    </div>
-                </div>
 
-                <div class="specs">
-                    <h4 class="specs-title">시스템 요구사항</h4>
-                    <ul class="specs-list">
-                        <li>Windows 10 이상 또는 macOS 10.15 이상</li>
-                        <li>4GB RAM 이상 (8GB 권장)</li>
-                        <li>웹캠 또는 외장 카메라 (HD 720p 이상)</li>
-                        <li>500MB 저장공간</li>
-                        <li>인터넷 연결 (초기 설치 및 업데이트시)</li>
-                        <li>Python 3.8 이상 (설치 패키지에 포함)</li>
-                    </ul>
+                    <div class="specs animate-fade-up" style="animation-delay: 0.4s">
+                        <h4 class="specs-title">시스템 요구사항</h4>
+                        <ul class="specs-list">
+                            <li>Windows 10 이상 또는 macOS 10.15 이상</li>
+                            <li>4GB RAM 이상 (8GB 권장)</li>
+                            <li>웹캠 또는 외장 카메라 (HD 720p 이상)</li>
+                            <li>500MB 저장공간</li>
+                            <li>인터넷 연결 (초기 설치 및 업데이트시)</li>
+                            <li>Python 3.8 이상 (설치 패키지에 포함)</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="section">
-        <div class="container">
-            <h2 class="section-title">Contact</h2>
-            <div class="contact-section">
-                <p style="font-size: 1.1rem; color: #666; margin-bottom: 2rem;">
-                    자세 어때에 대한 문의사항이나 피드백이 있으시면 언제든 연락해주세요.
-                </p>
-                <div class="contact-card">
-                    <h4 style="margin-bottom: 1rem;">개발팀 연락처</h4>
-                    <p style="margin-bottom: 0.5rem;">📧 Email: 8216kimsc@yonsei.ac.kr</p>
-                    <p style="margin-bottom: 0.5rem;">
-                        📚 GitHub: <a href="https://github.com/sososoosoo/AI-Posture-correction" class="release-link" target="_blank">https://github.com/sososoosoo/AI-Posture-correction</a>
+    <section class="tab-content" id="contact">
+        <div class="section">
+            <div class="container">
+                <h2 class="section-title animate-fade-up">Contact</h2>
+                <div class="contact-section animate-fade-up" style="animation-delay: 0.2s">
+                    <p style="font-size: 1.1rem; color: #666; margin-bottom: 2rem;">
+                        자세 어때에 대한 문의사항이나 피드백이 있으시면 언제든 연락해주세요.
                     </p>
-                    <p style="font-size: 0.9rem; color: #888; margin-top: 1rem;">
-                        버그 리포트 및 기능 요청은 개발팀 연락처를 이용해주세요.
-                    </p>
+                    <div class="contact-card">
+                        <h4 style="margin-bottom: 1rem;">개발팀 연락처</h4>
+                        <p style="margin-bottom: 0.5rem;">📧 Email: 8216kimsc@yonsei.ac.kr</p>
+                        <p style="margin-bottom: 0.5rem;">
+                            📚 GitHub: <a href="https://github.com/sososoosoo/AI-Posture-correction" class="release-link" target="_blank">https://github.com/sososoosoo/AI-Posture-correction</a>
+                        </p>
+                        <p style="font-size: 0.9rem; color: #888; margin-top: 1rem;">
+                            버그 리포트 및 기능 요청은 개발팀 연락처를 이용해주세요.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1404,6 +1444,9 @@
 
 <!-- JavaScript -->
 <script>
+    // Global state
+    let currentTab = 'home';
+
     // Navigation functionality
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('navMenu');
@@ -1426,26 +1469,137 @@
     hamburger.addEventListener('click', toggleMenu);
     navOverlay.addEventListener('click', closeMenu);
     
-    // Close menu when clicking nav links
-    document.querySelectorAll('.nav-link a').forEach(link => {
-        link.addEventListener('click', closeMenu);
-    });
-    
-    // Smooth scroll function
-    function smoothScrollTo(target) {
-        const element = document.querySelector(target);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
+    // Enhanced tab switching functionality
+    function showTab(tabName) {
+        // Don't switch if already on the same tab
+        if (currentTab === tabName) return;
+        
+        const currentTabElement = document.getElementById(currentTab);
+        const newTabElement = document.getElementById(tabName);
+        
+        if (!newTabElement) return;
+        
+        // Fade out current tab with enhanced animation
+        if (currentTabElement) {
+            currentTabElement.classList.add('fade-out');
+            
+            // Wait for fade out to complete
+            setTimeout(() => {
+                currentTabElement.classList.remove('active', 'fade-out');
+                currentTabElement.style.display = 'none';
+            }, 400);
         }
+        
+        // Show new tab with enhanced animation
+        setTimeout(() => {
+            newTabElement.style.display = 'block';
+            newTabElement.classList.add('active');
+            
+            // Apply staggered animations to content
+            applyStaggeredAnimations(newTabElement);
+            
+            // Update current tab
+            currentTab = tabName;
+            
+            // Update active nav links
+            updateActiveNavLinks(tabName);
+            
+            // Scroll to top with smooth animation
+            window.scrollTo({ 
+                top: 0, 
+                behavior: 'smooth',
+                duration: 800
+            });
+            
+        }, currentTabElement ? 200 : 0);
+        
+        // Close mobile menu with slight delay for smooth UX
+        setTimeout(() => {
+            closeMenu();
+        }, 150);
     }
     
-    // Add smooth scroll to all anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = this.getAttribute('href');
-            smoothScrollTo(target);
+    // Apply staggered animations to content elements
+    function applyStaggeredAnimations(tabElement) {
+        const animatedElements = tabElement.querySelectorAll('.animate-fade-up');
+        
+        animatedElements.forEach((el, index) => {
+            // Reset animation
+            el.style.animation = 'none';
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(50px) scale(0.94)';
+            
+            // Force reflow
+            el.offsetHeight;
+            
+            // Apply enhanced animation with staggered delay
+            setTimeout(() => {
+                el.style.animation = `contentFadeUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards`;
+            }, index * 80 + 100);
         });
+        
+        // Special handling for feature cards
+        const featureCards = tabElement.querySelectorAll('.feature-card');
+        featureCards.forEach((card, index) => {
+            card.style.animation = 'none';
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(60px) scale(0.9)';
+            card.offsetHeight;
+            
+            setTimeout(() => {
+                card.style.animation = `contentFadeUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards`;
+            }, index * 100 + 200);
+        });
+    }
+    
+    // Update active navigation links
+    function updateActiveNavLinks(tabName) {
+        // Update mobile nav
+        document.querySelectorAll('.nav-link a').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href === `#${tabName}`) {
+                link.parentElement.classList.add('active');
+            } else {
+                link.parentElement.classList.remove('active');
+            }
+        });
+    }
+    
+    // Add enhanced hover effects to nav items
+    function addNavHoverEffects() {
+        document.querySelectorAll('.nav-link').forEach(navItem => {
+            navItem.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateX(8px)';
+                this.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            });
+            
+            navItem.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateX(0)';
+            });
+        });
+    }
+    
+    // Add click events to navigation links
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mobile navigation
+        document.querySelectorAll('.nav-link a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const tabName = this.getAttribute('href').substring(1);
+                showTab(tabName);
+            });
+        });
+        
+        // Initialize enhanced hover effects
+        addNavHoverEffects();
+        
+        // Initialize the home tab with enhanced animations
+        setTimeout(() => {
+            const homeTab = document.getElementById('home');
+            if (homeTab) {
+                applyStaggeredAnimations(homeTab);
+            }
+        }, 300);
     });
     
     // Header scroll effect
@@ -1460,38 +1614,16 @@
         }
     });
     
-    // Active tab management for desktop navigation
-    function updateActiveTab() {
-        const sections = ['home', 'about', 'features', 'technology', 'team', 'download', 'contact'];
-        const navLinks = document.querySelectorAll('.nav-desktop-link');
-        
-        let currentSection = 'home';
-        
-        sections.forEach(sectionId => {
-            const section = document.getElementById(sectionId);
-            if (section) {
-                const rect = section.getBoundingClientRect();
-                if (rect.top <= 100 && rect.bottom >= 100) {
-                    currentSection = sectionId;
-                }
-            }
-        });
-        
-        navLinks.forEach(link => {
-            const href = link.getAttribute('href');
-            if (href === `#${currentSection}`) {
-                link.classList.add('active');
-            } else {
-                link.classList.remove('active');
-            }
-        });
+    // Utility function for smooth scrolling (kept for compatibility)
+    function smoothScrollTo(target) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    
-    // Update active tab on scroll
-    window.addEventListener('scroll', updateActiveTab);
-    
-    // Update active tab on page load
-    document.addEventListener('DOMContentLoaded', updateActiveTab);
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function() {
+        // Make sure home tab is active on load
+        showTab('home');
+    });
 </script>
 </body>
 </html>
