@@ -3,28 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>자세 어때</title>
-    <meta name="description" content="AI 기반 실시간 자세 분석 시스템. 건강한 자세 습관을 만들어보세요.">
-    <meta name="keywords" content="AI, 자세분석, 건강, 자세교정, 실시간분석">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+    <meta name="description" content="자세 어때 - AI 기반 실시간 자세 분석 시스템. 건강한 자세 습관을 만들어보세요.">
+    <meta name="keywords" content="AI, 자세분석, 건강, 자세교정, 실시간분석, YOLOv9, 딥러닝">
+    <meta name="author" content="Team BOAA">
+
+    <title>자세 어때 - Where Body meets AI</title>
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://yourname.github.io/AI-posture/">
-    <meta property="og:title" content="자세 어때">
+    <meta property="og:title" content="자세 어때 - Where Body meets AI">
     <meta property="og:description" content="AI 기반 실시간 자세 분석 시스템">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://yourname.github.io/AI-posture/">
-    <meta property="twitter:title" content="자세 어때">
+    <meta property="twitter:title" content="자세 어때 - Where Body meets AI">
     <meta property="twitter:description" content="AI 기반 실시간 자세 분석 시스템">
 
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+    <!-- CSS Files -->
     <style>
+        /* Reset and Base Styles */
         * {
             margin: 0;
             padding: 0;
@@ -32,191 +41,459 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
             line-height: 1.6;
             color: #1a1a1a;
             background: #ffffff;
             overflow-x: hidden;
         }
 
-        .navbar {
+        /* Container and Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .section {
+            padding: 6rem 2rem;
+        }
+
+        /* Header Navigation - Neuronic Style */
+        .header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
             z-index: 1000;
-            padding: 1rem 2rem;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .nav-container {
-            max-width: 1200px;
+        .nav {
+            max-width: 1400px;
             margin: 0 auto;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
+            font-family: 'Pretendard', sans-serif;
             font-size: 1.5rem;
-            font-weight: 600;
+            font-weight: 700;
             color: #000;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            color: #333;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .logo-subtitle {
+            font-size: 0.7rem;
+            font-weight: 400;
+            color: #666;
+            opacity: 0.8;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            background: none;
+            border: none;
             cursor: pointer;
+            padding: 0.5rem;
+            gap: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-line {
+            width: 24px;
+            height: 2px;
+            background: #000;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 2px;
+        }
+
+        .hamburger:hover .hamburger-line {
+            background: #333;
+        }
+
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
 
         .nav-menu {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 999;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
+            flex-direction: column;
+        }
+
+        .nav-menu.active {
+            right: 0;
+        }
+
+        .nav-menu-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 6rem 2rem 2rem;
+        }
+
+        .nav-links {
             list-style: none;
-            gap: 2rem;
-            align-items: center;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
         .nav-link {
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            color: #333;
             text-decoration: none;
-            color: #666;
-            font-weight: 400;
-            transition: color 0.3s ease;
-            cursor: pointer;
-            padding: 0.5rem 0;
+            font-weight: 500;
+            font-size: 1rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
         }
 
-        .nav-link:hover, .nav-link.active {
+        .nav-link:hover a {
+            background: rgba(0, 0, 0, 0.05);
             color: #000;
+            transform: translateX(5px);
         }
 
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            opacity: 0.7;
+        }
+
+        .nav-footer {
+            padding: 2rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(248, 249, 250, 0.5);
+        }
+
+        .nav-footer-text {
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .nav-footer-slogan {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* Hero Section - Neuronic Style */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 6rem 2rem 2rem;
+            padding: 8rem 2rem 4rem;
             background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
             position: relative;
+            overflow: hidden;
         }
 
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0.05) 100%);
+            z-index: 2;
+        }
+
+        .hero-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        .particle:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { top: 40%; left: 80%; animation-delay: 1s; }
+        .particle:nth-child(3) { top: 70%; left: 30%; animation-delay: 2s; }
+        .particle:nth-child(4) { top: 30%; left: 70%; animation-delay: 3s; }
+        .particle:nth-child(5) { top: 80%; left: 60%; animation-delay: 4s; }
+
+        .hero-tech-icons {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .tech-icon {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.6;
+            animation: bounce 2s infinite ease-in-out;
+        }
+
+        .tech-icon:nth-child(1) { top: 15%; left: 15%; animation-delay: 0s; }
+        .tech-icon:nth-child(2) { top: 25%; right: 20%; animation-delay: 0.5s; }
+        .tech-icon:nth-child(3) { bottom: 30%; left: 25%; animation-delay: 1s; }
+        .tech-icon:nth-child(4) { bottom: 20%; right: 15%; animation-delay: 1.5s; }
+
         .hero-content {
-            max-width: 800px;
+            max-width: 900px;
             text-align: center;
+            z-index: 4;
+            position: relative;
             animation: fadeInUp 1s ease-out;
         }
 
-        .emoji-icons {
-            font-size: 3rem;
-            margin-bottom: 2rem;
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            animation: bounce 2s infinite;
-        }
-
-        .hero-title {
-            font-size: 3.5rem;
-            font-weight: 700;
+        .hero-brand {
+            font-family: 'Pretendard', sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #000 0%, #333 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             line-height: 1.1;
-            margin-bottom: 1.5rem;
-            color: #000;
         }
 
-        .hero-subtitle {
-            font-size: 1.2rem;
-            color: #666;
-            margin-bottom: 3rem;
-            font-weight: 300;
+        .hero-slogan {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .hero-slogan .highlight {
+            color: #000;
+            font-weight: 700;
         }
 
         .hero-description {
-            font-size: 1.1rem;
-            color: #555;
+            font-size: 1.2rem;
+            color: #666;
             line-height: 1.8;
             margin-bottom: 3rem;
-            max-width: 600px;
+            max-width: 700px;
             margin-left: auto;
             margin-right: auto;
         }
 
-        .hero-buttons {
+        .hero-cta {
             display: flex;
             gap: 1.5rem;
             justify-content: center;
             flex-wrap: wrap;
+            margin-bottom: 4rem;
         }
 
-        .btn {
-            padding: 0.8rem 2rem;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 500;
-            text-decoration: none;
+        .hero-btn {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            transition: all 0.3s ease;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
             cursor: pointer;
         }
 
-        .btn-primary {
-            background: #000;
+        .hero-btn-primary {
+            background: linear-gradient(135deg, #000 0%, #333 100%);
             color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .btn-primary:hover {
-            background: #333;
+        .hero-btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
-        .btn-secondary {
-            background: transparent;
-            color: #000;
-            border: 1px solid #ddd;
+        .hero-btn-secondary {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
         }
 
-        .btn-secondary:hover {
-            background: #f8f9fa;
+        .hero-btn-secondary:hover {
+            background: rgba(255, 255, 255, 1);
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
 
-        .section {
-            padding: 6rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
+        .hero-scroll {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            z-index: 4;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+
+        .hero-scroll:hover {
+            color: #333;
+        }
+
+        .hero-scroll-text {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .hero-scroll-arrow {
+            width: 24px;
+            height: 40px;
+            border: 2px solid currentColor;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .hero-scroll-arrow::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 8px;
+            background: currentColor;
+            border-radius: 2px;
+            animation: scroll 2s infinite;
+        }
+
+        /* Main Content Sections */
+        main {
+            padding-top: 0;
         }
 
         .section-title {
+            font-family: 'Pretendard', sans-serif;
             font-size: 2.5rem;
-            font-weight: 600;
+            font-weight: 700;
             text-align: center;
             margin-bottom: 3rem;
             color: #000;
+            line-height: 1.2;
+        }
+
+        .section-description {
+            font-size: 1.1rem;
+            color: #666;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+            line-height: 1.7;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
             margin-bottom: 4rem;
         }
 
         .feature-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             animation: fadeInUp 0.6s ease-out forwards;
             opacity: 0;
             transform: translateY(30px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            border-color: rgba(0, 0, 0, 0.15);
         }
 
         .feature-card:nth-child(1) { animation-delay: 0.1s; }
@@ -225,61 +502,71 @@
         .feature-card:nth-child(4) { animation-delay: 0.4s; }
         .feature-card:nth-child(5) { animation-delay: 0.5s; }
         .feature-card:nth-child(6) { animation-delay: 0.6s; }
+        .feature-card:nth-child(7) { animation-delay: 0.7s; }
 
         .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
         }
 
         .feature-title {
-            font-size: 1.3rem;
+            font-family: 'Pretendard', sans-serif;
+            font-size: 1.4rem;
             font-weight: 600;
             margin-bottom: 1rem;
             color: #000;
+            line-height: 1.3;
         }
 
         .feature-description {
             color: #666;
-            line-height: 1.6;
+            line-height: 1.7;
+            font-size: 1rem;
         }
 
         .download-section {
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            background: linear-gradient(135deg, rgba(248, 250, 252, 0.9) 0%, rgba(241, 245, 249, 0.9) 100%);
+            backdrop-filter: blur(10px);
             padding: 4rem 2rem;
-            border-radius: 16px;
+            border-radius: 20px;
             text-align: center;
-            margin: 2rem 0;
+            margin: 4rem 0;
+            border: 1px solid rgba(0, 0, 0, 0.05);
             animation: slideInFromBottom 0.8s ease-out;
         }
 
         .version-badge {
             background: linear-gradient(135deg, #000 0%, #333 100%);
             color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
             font-size: 0.9rem;
+            font-weight: 600;
             display: inline-block;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             animation: pulse 2s infinite;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .download-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
         }
 
         .download-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             animation: scaleIn 0.5s ease-out forwards;
             opacity: 0;
-            transform: scale(0.9);
+            transform: scale(0.95);
         }
 
         .download-card:nth-child(1) { animation-delay: 0.2s; }
@@ -291,37 +578,40 @@
         }
 
         .specs {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 2rem;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 16px;
+            padding: 2.5rem;
             margin-top: 3rem;
             animation: fadeIn 1s ease-out;
         }
 
         .specs-title {
-            font-size: 1.3rem;
+            font-family: 'Pretendard', sans-serif;
+            font-size: 1.4rem;
             font-weight: 600;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             color: #000;
         }
 
         .specs-list {
             list-style: none;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1rem;
         }
 
         .specs-list li {
-            padding: 0.8rem 0;
+            padding: 1rem 0;
             color: #555;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.8rem;
             animation: slideInFromLeft 0.6s ease-out forwards;
             opacity: 0;
             transform: translateX(-20px);
+            font-size: 1rem;
         }
 
         .specs-list li:nth-child(1) { animation-delay: 0.1s; }
@@ -334,72 +624,105 @@
         .specs-list li:before {
             content: "✓";
             color: #22c55e;
-            font-weight: 600;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .contact-section {
+            background: rgba(248, 250, 252, 0.5);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .contact-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 16px;
+            padding: 2.5rem;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .footer {
             background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
             color: white;
-            padding: 3rem 2rem 2rem;
+            padding: 4rem 2rem 3rem;
             text-align: center;
-            margin-top: 4rem;
+            margin-top: 6rem;
         }
 
-        {/*.scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 24px;
-            height: 40px;
-            border: 2px solid #666;
-            border-radius: 12px;
-            display: flex;
-            justify-content: center;
-            padding-top: 8px;
+        .release-link {
+            color: #66a3ff;
+            text-decoration: none;
+            transition: color 0.3s ease;
         }
 
-        .scroll-indicator:before {
-            content: '';
-            width: 4px;
-            height: 8px;
-            background: #666;
-            border-radius: 2px;
-            animation: scroll 2s infinite;
-        } */}
+        .release-link:hover {
+            color: #4d8aff;
+            text-decoration: underline;
+        }
 
-        .mobile-menu-btn {
-            display: none;
-            background: none;
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 2rem;
             border: none;
-            font-size: 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
         }
 
-        .fade-enter {
-            opacity: 0;
-            transform: translateY(20px);
+        .btn-primary {
+            background: linear-gradient(135deg, #000 0%, #333 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .fade-enter-active {
-            opacity: 1;
-            transform: translateY(0);
-            transition: all 0.6s ease-out;
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
-        .fade-exit {
-            opacity: 1;
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
         }
 
-        .fade-exit-active {
-            opacity: 0;
-            transform: translateY(-20px);
-            transition: all 0.3s ease-out;
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
 
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        /* Animations */
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
         }
 
         @keyframes fadeIn {
@@ -408,332 +731,553 @@
         }
 
         @keyframes slideInFromBottom {
-            from { opacity: 0; transform: translateY(50px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { 
+                opacity: 0; 
+                transform: translateY(50px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
         }
 
         @keyframes slideInFromLeft {
-            from { opacity: 0; transform: translateX(-30px); }
-            to { opacity: 1; transform: translateX(0); }
+            from { 
+                opacity: 0; 
+                transform: translateX(-30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateX(0); 
+            }
         }
 
         @keyframes scaleIn {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
+            from { 
+                opacity: 0; 
+                transform: scale(0.95); 
+            }
+            to { 
+                opacity: 1; 
+                transform: scale(1); 
+            }
         }
 
         @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
+            0%, 20%, 50%, 80%, 100% { 
+                transform: translateY(0); 
+            }
+            40% { 
+                transform: translateY(-10px); 
+            }
+            60% { 
+                transform: translateY(-5px); 
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg); 
+            }
+            50% { 
+                transform: translateY(-20px) rotate(180deg); 
+            }
         }
 
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(0, 0, 0, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+            0% { 
+                box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.4); 
+            }
+            70% { 
+                box-shadow: 0 0 0 10px rgba(0, 0, 0, 0); 
+            }
+            100% { 
+                box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); 
+            }
         }
 
         @keyframes scroll {
-            0% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(12px); opacity: 0; }
-        }
-
-        @media (max-width: 768px) {
-            .hero-title { font-size: 2.5rem; }
-            .nav-menu { 
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: rgba(255, 255, 255, 0.95);
-                backdrop-filter: blur(10px);
-                flex-direction: column;
-                padding: 1rem 2rem;
-                border-top: 1px solid rgba(0, 0, 0, 0.1);
+            0% { 
+                transform: translateY(0); 
+                opacity: 1; 
             }
-            .nav-menu.open { display: flex; }
-            .mobile-menu-btn { display: block; }
-            .hero-buttons { flex-direction: column; align-items: center; }
-            .emoji-icons { font-size: 2rem; }
-        }
-
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
+            100% { 
+                transform: translateY(12px); 
+                opacity: 0; 
+            }
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to { 
+                transform: rotate(360deg); 
+            }
         }
 
-        .release-link {
-            color: #0066cc;
-            text-decoration: none;
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .nav-menu {
+                width: 350px;
+                right: -350px;
+            }
+
+            .nav {
+                padding: 1rem 1.5rem;
+            }
         }
 
-        .release-link:hover {
-            text-decoration: underline;
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .hero-brand {
+                font-size: 3rem;
+            }
+
+            .hero-slogan {
+                font-size: 1.2rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+
+            .nav-menu {
+                width: 100%;
+                right: -100%;
+            }
+
+            .nav-menu-content {
+                padding: 5rem 1.5rem 1.5rem;
+            }
+
+            .section {
+                padding: 4rem 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .feature-card {
+                padding: 2rem;
+            }
+
+            .download-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .specs-list {
+                grid-template-columns: 1fr;
+            }
+
+            .tech-icon {
+                font-size: 1.5rem;
+            }
+
+            .hero-scroll {
+                bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 6rem 1rem 3rem;
+            }
+
+            .hero-brand {
+                font-size: 2.5rem;
+            }
+
+            .hero-slogan {
+                font-size: 1.1rem;
+            }
+
+            .hero-description {
+                font-size: 0.95rem;
+            }
+
+            .nav {
+                padding: 0.8rem 1rem;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .logo-subtitle {
+                font-size: 0.65rem;
+            }
+
+            .section {
+                padding: 3rem 1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .feature-card,
+            .download-card,
+            .specs {
+                padding: 1.5rem;
+            }
+
+            .hero-scroll {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
-    <div id="root"></div>
+<!-- Header Navigation -->
+<header class="header" id="header">
+    <nav class="nav">
+        <!-- Logo -->
+        <a href="#home" class="logo">
+            <span class="logo-text">
+                자세 어때
+                <span class="logo-subtitle">Where Body meets AI</span>
+            </span>
+        </a>
 
-    <script type="text/babel">
-        const { useState, useEffect } = React;
+        <!-- Hamburger Menu Button -->
+        <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+    </nav>
 
-        const App = () => {
-            const [activeTab, setActiveTab] = useState('home');
-            const [isLoading, setIsLoading] = useState({});
-            const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay" id="navOverlay"></div>
 
-            const handleTabChange = (tab) => {
-                setActiveTab(tab);
-                setMobileMenuOpen(false);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            };
+    <!-- Navigation Menu -->
+    <div class="nav-menu" id="navMenu">
+        <!-- Scrollable Content -->
+        <div class="nav-menu-content">
+            <ul class="nav-links">
+                <li class="nav-link">
+                    <a href="#home">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                        </svg>
+                        Home
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a href="#about">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                        About
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a href="#features">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                        </svg>
+                        Features
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a href="#download">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                        </svg>
+                        Download
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a href="#contact">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        </svg>
+                        Contact
+                    </a>
+                </li>
+            </ul>
+        </div>
 
-            const handleDownload = async (platform) => {
-                setIsLoading({ ...isLoading, [platform]: true });
-                
-                // GitHub Releases 링크로 리다이렉트
-                setTimeout(() => {
-                    if (platform === 'windows') {
-                        // 실제 GitHub Release 링크로 변경 필요
-                        window.open('https://github.com/sososoosoo/BOAA-Posture-Web/releases/download/v1.0.1/BOAA-Front.exe', '_blank');
-                    }
-                    setIsLoading({ ...isLoading, [platform]: false });
-                }, 1000);
-            };
-
-            const Navbar = () => (
-                <nav className="navbar">
-                    <div className="nav-container">
-                        <a href="#" className="logo" onClick={() => handleTabChange('home')}>자세 어때</a>
-                        <button 
-                            className="mobile-menu-btn"
-                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        >
-                            ☰
-                        </button>
-                        <ul className={`nav-menu ${mobileMenuOpen ? 'open' : ''}`}>
-                            {[
-                                {key: 'home', label: 'Home'},
-                                {key: 'about', label: 'About'},
-                                {key: 'features', label: 'Features'},
-                                {key: 'download', label: 'Download'},
-                                {key: 'contact', label: 'Contact'}
-                            ].map(item => (
-                                <li key={item.key}>
-                                    <a 
-                                        href="#" 
-                                        className={`nav-link ${activeTab === item.key ? 'active' : ''}`}
-                                        onClick={(e) => { e.preventDefault(); handleTabChange(item.key); }}
-                                    >
-                                        {item.label}
-                                    </a>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </nav>
-            );
-
-            const Hero = () => (
-                <section className="hero">
-                    <div className="hero-content">
-                        {/*<div className="emoji-icons">
-                            <span>🤖</span>
-                            <span>📊</span>
-                            <span>🎯</span>
-                            <span>⚡</span>
-                        </div> */}
-                        <h1 className="hero-title">Where Body meets AI</h1>
-                        <p className="hero-subtitle">AI 기반 실시간 자세 분석 시스템</p>
-                        <p className="hero-description">
-                            최신 인공지능 기술과 컴퓨터 비전을 활용하여 실시간으로 자세를 분석하고 
-                            개선 방향을 제시하는 혁신적인 솔루션입니다. 건강한 자세 습관을 만들어보세요.
-                        </p>
-                        <div className="hero-buttons">
-                            <button 
-                                className="btn btn-primary" 
-                                onClick={() => handleTabChange('download')}
-                            >
-                                다운로드 하기
-                            </button>
-                            <button 
-                                className="btn btn-secondary" 
-                                onClick={() => handleTabChange('features')}
-                            >
-                                기술 살펴보기
-                            </button>
-                        </div>
-                    </div>
-                    {/*<div className="scroll-indicator"></div>*/}
-                </section>
-            );
-
-            const About = () => (
-                <section className="section">
-                    <h2 className="section-title">자세 어때</h2>
-                    <div className="hero-description" style={{textAlign: 'center', maxWidth: '800px', margin: '0 auto'}}>
-                        <p>자세 어때는 현대인의 자세 문제를 해결하기 위해 개발되었습니다.<br />
-                        장시간 컴퓨터 사용으로 인한 거북목, 라운드숄더 등의 문제를 실시간으로 감지하고
-                        개선 방향을 제시합니다.</p>
-                        <br />
-                        <p>MediaPipe와 OpenCV 기술을 기반으로 하여 정확하고 빠른 자세 판단이 가능하며<br />
-                        사용자 친화적인 인터페이스로 누구나 쉽게 사용할 수 있습니다.</p>
-                    </div>
-                </section>
-            );
-
-            const Features = () => {
-                const features = [
-                    { icon: '🎯', title: '실시간 자세 분석', desc: '카메라를 통해 실시간으로 자세를 분석하고 즉각적인 피드백을 제공합니다.' },
-                    { icon: '🤖', title: 'AI 기반 정확도', desc: '최신 딥러닝 모델을 사용하여 높은 정확도의 자세 인식을 제공합니다.' },
-                    { icon: '📊', title: '상세한 분석 리포트', desc: '자세 데이터를 엑셀로 저장하여 장기적인 자세 개선 추적이 가능합니다.' },
-                    { icon: '⚡', title: '빠른 처리속도', desc: '최적화된 알고리즘으로 지연 없는 실시간 분석을 제공합니다.' },
-                    { icon: '🔧', title: '사용자 맞춤 설정', desc: '개인의 체형과 환경에 맞는 맞춤형 분석 설정이 가능합니다.' },
-                    { icon: '🏥', title: '건강 관리 통합', desc: '자세 개선을 통한 전반적인 건강 상태 향상을 도모합니다.' },
-                    { icon: '🏥', title: '첨단 딥러닝 기반의 정확성', desc: '기존 모델 대비 향상된 정확성과 효율성을 자랑하는 YOLOv9 기술을 적용하여, 미세한 자세 변화까지 놓치지 않고 분석합니다. 이를 통해 신뢰도 높은 데이터를 제공하며, 더 효과적인 자세 교정을 돕습니다.' }
-                    { icon: '🏥', title: '건강 관리 통합', desc: '자세 개선을 통한 전반적인 건강 상태 향상을 도모합니다.' }
-                ];
-
-                return (
-                    <section className="section">
-                        <h2 className="section-title">주요 기능</h2>
-                        <div className="features-grid">
-                            {features.map((feature, index) => (
-                                <div key={index} className="feature-card">
-                                    <div className="feature-icon">{feature.icon}</div>
-                                    <h3 className="feature-title">{feature.title}</h3>
-                                    <p className="feature-description">{feature.desc}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-                );
-            };
-
-            const Download = () => (
-                <section className="section">
-                    <h2 className="section-title">다운로드</h2>
-                    <div className="download-section">
-                        <div className="version-badge">v1.0.0 Latest</div>
-                        <h3 style={{fontSize: '1.5rem', marginBottom: '1rem'}}>지금 다운로드하고 건강한 자세를 만들어보세요</h3>
-                        <p style={{color: '#666', marginBottom: '2rem'}}>자세 어때 프로그램을 설치하여 바른 자세 습관을 기르세요.</p>
-                        
-                        <div className="download-grid">
-                            <div className="download-card">
-                                <div style={{fontSize: '3rem', marginBottom: '1rem'}}>🖥️</div>
-                                <h4 style={{marginBottom: '1rem'}}>Windows</h4>
-                                <p style={{color: '#666', fontSize: '0.9rem', marginBottom: '1.5rem'}}>Windows 10/11 지원</p>
-                                <button 
-                                    className="btn btn-primary" 
-                                    style={{width: '100%'}}
-                                    onClick={() => handleDownload('windows')}
-                                    disabled={isLoading.windows}
-                                >
-                                    {isLoading.windows ? <span className="loading"></span> : 'Windows 다운로드'}
-                                </button>
-                            </div>
-                            <div className="download-card">
-                                <div style={{fontSize: '3rem', marginBottom: '1rem'}}>📱</div>
-                                <h4 style={{marginBottom: '1rem'}}>Mobile App</h4>
-                                <p style={{color: '#666', fontSize: '0.9rem', marginBottom: '1.5rem'}}>Android/iOS 앱</p>
-                                <button className="btn btn-secondary" style={{width: '100%'}} disabled>곧 출시 예정</button>
-                            </div>
-                        </div>
-
-                        <div className="specs">
-                            <h4 className="specs-title">시스템 요구사항</h4>
-                            <ul className="specs-list">
-                                <li>Windows 10 이상 또는 macOS 10.15 이상</li>
-                                <li>4GB RAM 이상 (8GB 권장)</li>
-                                <li>웹캠 또는 외장 카메라 (HD 720p 이상)</li>
-                                <li>500MB 저장공간</li>
-                                <li>인터넷 연결 (초기 설치 및 업데이트시)</li>
-                                <li>Python 3.8 이상 (설치 패키지에 포함)</li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
-            );
-
-            const Contact = () => (
-                <section className="section">
-                    <h2 className="section-title">Contact</h2>
-                    <div style={{textAlign: 'center', maxWidth: '600px', margin: '0 auto'}}>
-                        <p style={{fontSize: '1.1rem', color: '#666', marginBottom: '2rem'}}>
-                            자세 어때에 대한 문의사항이나 피드백이 있으시면 언제든 연락해주세요.
-                        </p>
-                        <div style={{background: '#f8fafc', padding: '2rem', borderRadius: '12px', border: '1px solid #e5e7eb'}}>
-                            <h4 style={{marginBottom: '1rem'}}>개발팀 연락처</h4>
-                            <p style={{marginBottom: '0.5rem'}}> Email: 8216kimsc@yonsei.ac.kr</p>
-                            <p style={{marginBottom: '0.5rem'}}>
-                                 GitHub: <a href="https://github.com/sososoosoo/AI-Posture-correction" className="release-link" target="_blank">https://github.com/sososoosoo/AI-Posture-correction</a>
-                            </p>
-                            {/* <p style={{marginBottom: '0.5rem'}}> Website: posture-ai.com</p> */}
-                            <p style={{fontSize: '0.9rem', color: '#888', marginTop: '1rem'}}>
-                                버그 리포트 및 기능 요청은 개발팀 연락처를 이용해주세요.
-                            </p>
-                        </div>
-                    </div>
-                </section>
-            );
-
-            const Footer = () => (
-                <footer className="footer">
-                    <p>&copy; 2025 자세 어때. Where Body meets AI. All rights reserved.</p>
-                    <p style={{marginTop: '0.5rem', color: '#888'}}>건강한 자세, 건강한 삶을 위한 첫걸음</p>
-                    <p style={{marginTop: '1rem', fontSize: '0.9rem'}}>
-                        Made by Team BOAA
-                    </p>
-                </footer>
-            );
-
-            const renderContent = () => {
-                switch(activeTab) {
-                    case 'home': return <Hero />;
-                    case 'about': return <About />;
-                    case 'features': return <Features />;
-                    case 'download': return <Download />;
-                    case 'contact': return <Contact />;
-                    default: return <Hero />;
-                }
-            };
-
-            // Close mobile menu when clicking outside
-            useEffect(() => {
-                const handleClickOutside = (event) => {
-                    if (mobileMenuOpen && !event.target.closest('.nav-container')) {
-                        setMobileMenuOpen(false);
-                    }
-                };
-
-                document.addEventListener('click', handleClickOutside);
-                return () => document.removeEventListener('click', handleClickOutside);
-            }, [mobileMenuOpen]);
-
-            return (
-                <div>
-                    <Navbar />
-                    <div className={`fade-enter-active`}>
-                        {renderContent()}
-                    </div>
-                    <Footer />
+        <!-- Navigation Footer -->
+        <div class="nav-footer">
+            <div class="nav-footer-text">
+                <div class="nav-footer-slogan">
+                    "Where Body<br>meets AI"
                 </div>
-            );
-        };
+                © 2025 Team BOAA
+            </div>
+        </div>
+    </div>
+</header>
 
-        ReactDOM.render(<App />, document.getElementById('root'));
-    </script>
+<!-- Main Content -->
+<main>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <!-- Background Elements -->
+        <div class="hero-background"></div>
+        <div class="hero-overlay"></div>
+
+        <!-- Floating Particles -->
+        <div class="hero-particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+
+        <!-- Tech Icons -->
+        <div class="hero-tech-icons">
+            <div class="tech-icon">🤖</div>
+            <div class="tech-icon">📊</div>
+            <div class="tech-icon">🎯</div>
+            <div class="tech-icon">⚡</div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <h1 class="hero-brand">자세 어때</h1>
+            <p class="hero-slogan">
+                Where <span class="highlight">Body</span><br>
+                meets <span class="highlight">AI</span>
+            </p>
+            <p class="hero-description">
+                최신 인공지능 기술과 컴퓨터 비전을 활용하여 실시간으로 자세를 분석하고<br>
+                개선 방향을 제시하는 혁신적인 솔루션입니다. 건강한 자세 습관을 만들어보세요.
+            </p>
+            <div class="hero-cta">
+                <a href="#download" class="hero-btn hero-btn-primary">
+                    다운로드 하기
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"/>
+                    </svg>
+                </a>
+                <a href="#features" class="hero-btn hero-btn-secondary">
+                    기술 살펴보기
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="hero-scroll" onclick="smoothScrollTo('#about')">
+            <span class="hero-scroll-text">Scroll</span>
+            <div class="hero-scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">자세 어때</h2>
+            <p class="section-description">
+                자세 어때는 현대인의 자세 문제를 해결하기 위해 개발되었습니다.<br>
+                장시간 컴퓨터 사용으로 인한 거북목, 라운드숄더 등의 문제를 실시간으로 감지하고
+                개선 방향을 제시합니다.<br><br>
+                MediaPipe와 OpenCV 기술을 기반으로 하여 정확하고 빠른 자세 판단이 가능하며<br>
+                사용자 친화적인 인터페이스로 누구나 쉽게 사용할 수 있습니다.
+            </p>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section">
+        <div class="container">
+            <h2 class="section-title">주요 기능</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">실시간 자세 분석</h3>
+                    <p class="feature-description">카메라를 통해 실시간으로 자세를 분석하고 즉각적인 피드백을 제공합니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">AI 기반 정확도</h3>
+                    <p class="feature-description">최신 딥러닝 모델을 사용하여 높은 정확도의 자세 인식을 제공합니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">상세한 분석 리포트</h3>
+                    <p class="feature-description">자세 데이터를 엑셀로 저장하여 장기적인 자세 개선 추적이 가능합니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">빠른 처리속도</h3>
+                    <p class="feature-description">최적화된 알고리즘으로 지연 없는 실시간 분석을 제공합니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3 class="feature-title">사용자 맞춤 설정</h3>
+                    <p class="feature-description">개인의 체형과 환경에 맞는 맞춤형 분석 설정이 가능합니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏥</div>
+                    <h3 class="feature-title">건강 관리 통합</h3>
+                    <p class="feature-description">자세 개선을 통한 전반적인 건강 상태 향상을 도모합니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎖️</div>
+                    <h3 class="feature-title">첨단 딥러닝 기반의 정확성</h3>
+                    <p class="feature-description">기존 모델 대비 향상된 정확성과 효율성을 자랑하는 YOLOv9 기술을 적용하여, 미세한 자세 변화까지 놓치지 않고 분석합니다. 이를 통해 신뢰도 높은 데이터를 제공하며, 더 효과적인 자세 교정을 돕습니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="section">
+        <div class="container">
+            <h2 class="section-title">다운로드</h2>
+            <div class="download-section">
+                <div class="version-badge">v1.0.0 Latest</div>
+                <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">지금 다운로드하고 건강한 자세를 만들어보세요</h3>
+                <p style="color: #666; margin-bottom: 2rem;">자세 어때 프로그램을 설치하여 바른 자세 습관을 기르세요.</p>
+                
+                <div class="download-grid">
+                    <div class="download-card">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🖥️</div>
+                        <h4 style="margin-bottom: 1rem;">Windows</h4>
+                        <p style="color: #666; font-size: 0.9rem; margin-bottom: 1.5rem;">Windows 10/11 지원</p>
+                        <a href="https://github.com/sososoosoo/BOAA-Posture-Web/releases/download/v1.0.1/BOAA-Front.exe" 
+                           class="btn btn-primary" 
+                           style="width: 100%; display: flex; justify-content: center;"
+                           target="_blank">
+                            Windows 다운로드
+                        </a>
+                    </div>
+                    <div class="download-card">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">📱</div>
+                        <h4 style="margin-bottom: 1rem;">Mobile App</h4>
+                        <p style="color: #666; font-size: 0.9rem; margin-bottom: 1.5rem;">Android/iOS 앱</p>
+                        <button class="btn btn-secondary" style="width: 100%;" disabled>곧 출시 예정</button>
+                    </div>
+                </div>
+
+                <div class="specs">
+                    <h4 class="specs-title">시스템 요구사항</h4>
+                    <ul class="specs-list">
+                        <li>Windows 10 이상 또는 macOS 10.15 이상</li>
+                        <li>4GB RAM 이상 (8GB 권장)</li>
+                        <li>웹캠 또는 외장 카메라 (HD 720p 이상)</li>
+                        <li>500MB 저장공간</li>
+                        <li>인터넷 연결 (초기 설치 및 업데이트시)</li>
+                        <li>Python 3.8 이상 (설치 패키지에 포함)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">Contact</h2>
+            <div class="contact-section">
+                <p style="font-size: 1.1rem; color: #666; margin-bottom: 2rem;">
+                    자세 어때에 대한 문의사항이나 피드백이 있으시면 언제든 연락해주세요.
+                </p>
+                <div class="contact-card">
+                    <h4 style="margin-bottom: 1rem;">개발팀 연락처</h4>
+                    <p style="margin-bottom: 0.5rem;">📧 Email: 8216kimsc@yonsei.ac.kr</p>
+                    <p style="margin-bottom: 0.5rem;">
+                        📚 GitHub: <a href="https://github.com/sososoosoo/AI-Posture-correction" class="release-link" target="_blank">https://github.com/sososoosoo/AI-Posture-correction</a>
+                    </p>
+                    <p style="font-size: 0.9rem; color: #888; margin-top: 1rem;">
+                        버그 리포트 및 기능 요청은 개발팀 연락처를 이용해주세요.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2025 자세 어때. Where Body meets AI. All rights reserved.</p>
+    <p style="margin-top: 0.5rem; color: #888;">건강한 자세, 건강한 삶을 위한 첫걸음</p>
+    <p style="margin-top: 1rem; font-size: 0.9rem;">
+        Made by Team BOAA
+    </p>
+</footer>
+
+<!-- JavaScript -->
+<script>
+    // Navigation functionality
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+    const navOverlay = document.getElementById('navOverlay');
+    
+    function toggleMenu() {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+        navOverlay.classList.toggle('active');
+        document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+    }
+    
+    function closeMenu() {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        navOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    
+    hamburger.addEventListener('click', toggleMenu);
+    navOverlay.addEventListener('click', closeMenu);
+    
+    // Close menu when clicking nav links
+    document.querySelectorAll('.nav-link a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+    
+    // Smooth scroll function
+    function smoothScrollTo(target) {
+        const element = document.querySelector(target);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+    
+    // Add smooth scroll to all anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = this.getAttribute('href');
+            smoothScrollTo(target);
+        });
+    });
+    
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+        const header = document.getElementById('header');
+        if (window.scrollY > 100) {
+            header.style.background = 'rgba(255, 255, 255, 0.98)';
+            header.style.backdropFilter = 'blur(20px)';
+        } else {
+            header.style.background = 'rgba(255, 255, 255, 0.95)';
+            header.style.backdropFilter = 'blur(20px)';
+        }
+    });
+</script>
 </body>
 </html>
