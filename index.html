@@ -947,6 +947,19 @@
             padding: 2.5rem;
             max-width: 600px;
             margin: 0 auto;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .contact-card p {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+
+        .contact-card .release-link {
+            word-break: break-all;
+            overflow-wrap: anywhere;
         }
 
         .footer {
@@ -1256,6 +1269,18 @@
 
             .hero-scroll {
                 display: none;
+            }
+
+            .contact-card {
+                padding: 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .contact-card .release-link {
+                font-size: 0.8rem;
+                line-height: 1.4;
+                display: inline-block;
+                max-width: 100%;
             }
         }
     </style>
@@ -1588,7 +1613,7 @@
             <div class="container">
                 <h2 class="section-title animate-fade-up">다운로드</h2>
                 <div class="download-section animate-fade-up" style="animation-delay: 0.2s">
-                    <div class="version-badge">v1.0.3 Latest</div>
+                    <div class="version-badge">v1.0.4 Latest</div>
                     <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">지금 다운로드하고 건강한 자세를 만들어보세요</h3>
                     <p style="color: #666; margin-bottom: 2rem;">자세 어때 프로그램을 설치하여 바른 자세 습관을 기르세요.</p>
                     
