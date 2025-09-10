@@ -703,6 +703,7 @@
 
         .download-card:nth-child(1) { animation-delay: 0.2s; }
         .download-card:nth-child(2) { animation-delay: 0.4s; }
+        .download-card:nth-child(3) { animation-delay: 0.6s; }
 
         .download-card:hover {
             transform: translateY(-5px) scale(1.02);
@@ -758,6 +759,100 @@
             color: #22c55e;
             font-weight: 700;
             font-size: 1.1rem;
+        }
+
+        .faq-section {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-top: 3rem;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .faq-title {
+            font-family: 'Pretendard', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: #000;
+        }
+
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 1.5rem;
+            background: none;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .faq-question.active {
+            background: rgba(0, 0, 0, 0.04);
+        }
+
+        .faq-icon {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+            color: #666;
+        }
+
+        .faq-question.active .faq-icon {
+            transform: rotate(45deg);
+            color: #333;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(248, 249, 250, 0.5);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            opacity: 0;
+        }
+
+        .faq-answer.active {
+            max-height: 200px;
+            opacity: 1;
+            padding: 1.5rem;
+        }
+
+        .faq-answer p {
+            margin: 0;
+            color: #666;
+            line-height: 1.6;
+            font-size: 0.95rem;
         }
 
         .contact-section {
@@ -1358,12 +1453,12 @@
     </section>
 
     <!-- Team Section -->
-    <section class="tab-content" id="team">
+    <!-- <section class="tab-content" id="team">
         <div class="section">
             <div class="container">
-                <h2 class="section-title animate-fade-up">팀 BOAA</h2>
+                <h2 class="section-title animate-fade-up">Team BOAA</h2>
                 <p class="section-description animate-fade-up" style="animation-delay: 0.2s">
-                    건강한 미래를 만들어가는 자세 분석 전문가들입니다.
+                    Team BOAA 구성원
                 </p>
                 
                 <div class="features-grid">
@@ -1401,6 +1496,7 @@
             </div>
         </div>
     </section>
+    -->
 
     <!-- Download Section -->
     <section class="tab-content" id="download">
@@ -1408,7 +1504,7 @@
             <div class="container">
                 <h2 class="section-title animate-fade-up">다운로드</h2>
                 <div class="download-section animate-fade-up" style="animation-delay: 0.2s">
-                    <div class="version-badge">v1.0.0 Latest</div>
+                    <div class="version-badge">v1.0.3 Latest</div>
                     <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">지금 다운로드하고 건강한 자세를 만들어보세요</h3>
                     <p style="color: #666; margin-bottom: 2rem;">자세 어때 프로그램을 설치하여 바른 자세 습관을 기르세요.</p>
                     
@@ -1423,6 +1519,12 @@
                                target="_blank">
                                 Windows 다운로드
                             </a>
+                        </div>
+                        <div class="download-card">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🍎</div>
+                            <h4 style="margin-bottom: 1rem;">macOS</h4>
+                            <p style="color: #666; font-size: 0.9rem; margin-bottom: 1.5rem;">macOS 10.15 이상</p>
+                            <button class="btn btn-secondary" style="width: 100%;" disabled>곧 출시 예정</button>
                         </div>
                         <div class="download-card">
                             <div style="font-size: 3rem; margin-bottom: 1rem;">📱</div>
@@ -1442,6 +1544,24 @@
                             <li>인터넷 연결 (초기 설치 및 업데이트시)</li>
                             <li>Python 3.8 이상 (설치 패키지에 포함)</li>
                         </ul>
+                    </div>
+
+                    <!-- FAQ Section -->
+                    <div class="faq-section animate-fade-up" style="animation-delay: 0.6s">
+                        <h4 class="faq-title">자주 묻는 질문 (FAQ)</h4>
+                        <div class="faq-container">
+                            <div class="faq-item">
+                                <button class="faq-question" onclick="toggleFaq(this)">
+                                    <span>프로그램 실행이 안돼요</span>
+                                    <svg class="faq-icon" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                                    </svg>
+                                </button>
+                                <div class="faq-answer">
+                                    <p>프로그램 실행 경로에 한글이 포함되어 있는지 확인하여 주세요. 한글이 포함되어 있지 않은 경로로 이동 후 다시 실행하여 주세요.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1659,6 +1779,30 @@
     // Utility function for smooth scrolling (kept for compatibility)
     function smoothScrollTo(target) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // FAQ Toggle Function
+    function toggleFaq(button) {
+        const faqItem = button.closest('.faq-item');
+        const answer = faqItem.querySelector('.faq-answer');
+        const isActive = button.classList.contains('active');
+        
+        // Close all other FAQ items
+        document.querySelectorAll('.faq-question.active').forEach(activeButton => {
+            if (activeButton !== button) {
+                activeButton.classList.remove('active');
+                activeButton.closest('.faq-item').querySelector('.faq-answer').classList.remove('active');
+            }
+        });
+        
+        // Toggle current FAQ item
+        if (isActive) {
+            button.classList.remove('active');
+            answer.classList.remove('active');
+        } else {
+            button.classList.add('active');
+            answer.classList.add('active');
+        }
     }
 
     // Initialize the page
